@@ -6,7 +6,7 @@ export default function PokemonSelect({ handlePokemonChange = () => {} }) {
   // instead of "subscribing" into the selectedPokemon change,
   // you'd probably want a custom hook to control the select =)
 
-  const [selectedPokemon, setSelectedPokemon] = useState("bulbasaur");
+  const [selectedPokemon, setSelectedPokemon] = useState("Bulbasaur");
 
   useEffect(() => {
     handlePokemonChange(selectedPokemon);
@@ -23,9 +23,7 @@ export default function PokemonSelect({ handlePokemonChange = () => {} }) {
         ></label>
         <select
           value={selectedPokemon}
-          onChange={(event) =>
-            setSelectedPokemon(event.target.value.toLowerCase())
-          }
+          onChange={(event) => setSelectedPokemon(event.target.value)}
           id="pokemon"
           name="pokemon"
           className="block w-full pl-3 pr-10 py-2 text-base sm:text-sm border-gray-300 focus:ring-red-300 focus:border-orange-300 rounded-md"

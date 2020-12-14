@@ -9,17 +9,30 @@ export default function Home() {
   const [pokemon, setPokemon] = useState("bulbasaur");
   const [selectedPokemonImage, setSelectedPokemonImage] = useState();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   useEffect(() => {
     fetchPokemon();
 
     async function fetchPokemon() {
       const API_PREIX = "https://pokeapi.co/api/v2/pokemon/";
       const url = new URL(`${API_PREIX}${pokemon}`);
-      const result = await fetch(url);
-      const data = await result.json();
-      const image = data.sprites.other.dream_world.front_default;
 
-      setSelectedPokemonImage(image);
+      setIsError(false);
+      setIsLoading(true);
+
+      try {
+        const result = await fetch(url);
+        const data = await result.json();
+        const image = data.sprites.other.dream_world.front_default;
+
+        setSelectedPokemonImage(image);
+      } catch (e) {
+        setIsError(true);
+      }
+
+      setIsLoading(false);
     }
   }, [pokemon]);
 
@@ -39,13 +52,21 @@ export default function Home() {
               <Hero />
 
               <div className="mx-5 mt-4">
-                <PokemonSelect handlePokemonChange={setPokemon} />
+                <PokemonSelect
+                  handlePokemonChange={(pokemon) =>
+                    setPokemon(pokemon.toLowerCase())
+                  }
+                />
               </div>
             </main>
           </div>
           <Divider />
           <div className="mt-8 max-w-full flex-1">
-            <Pokemon image={selectedPokemonImage} />
+            {isError ? (
+              "Ooops, there was an error..."
+            ) : (
+              <Pokemon image={selectedPokemonImage} isLoading={isLoading} />
+            )}
           </div>
         </div>
       </div>
