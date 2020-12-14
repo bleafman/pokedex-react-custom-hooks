@@ -6,36 +6,6 @@ import Pokemon from "../components/Pokemon";
 import PokemonSelect from "../components/PokemonSelect";
 
 export default function Home() {
-  const [pokemon, setPokemon] = useState("bulbasaur");
-  const [selectedPokemonImage, setSelectedPokemonImage] = useState();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    fetchPokemon();
-
-    async function fetchPokemon() {
-      const API_PREIX = "https://pokeapi.co/api/v2/pokemon/";
-      const url = new URL(`${API_PREIX}${pokemon}`);
-
-      setIsError(false);
-      setIsLoading(true);
-
-      try {
-        const result = await fetch(url);
-        const data = await result.json();
-        const image = data.sprites.other.dream_world.front_default;
-
-        setSelectedPokemonImage(image);
-      } catch (e) {
-        setIsError(true);
-      }
-
-      setIsLoading(false);
-    }
-  }, [pokemon]);
-
   return (
     <>
       <Head>
@@ -51,23 +21,13 @@ export default function Home() {
             <main className="mx-auto max-w-7xl sm:mt-12 sm:px-6 mt-6 mb-12 sm:mb-16 md:mt-16 lg:px-8">
               <Hero />
               <div className="mx-5 mt-4">
-                <PokemonSelect
-                  handlePokemonChange={(pokemon) =>
-                    setPokemon(pokemon.toLowerCase())
-                  }
-                />
+                <PokemonSelect handlePokemonChange={() => {}} />
               </div>
             </main>
           </div>
           <Divider />
           <div className="mt-8 max-w-full flex-1">
-            {isError ? (
-              <div className="text-rose-500 mt-32 text-center">
-                Oh no! There was an error...
-              </div>
-            ) : (
-              <Pokemon image={selectedPokemonImage} isLoading={isLoading} />
-            )}
+            <Pokemon isLoading={false} />
           </div>
         </div>
       </div>
