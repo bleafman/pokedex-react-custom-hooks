@@ -1,10 +1,28 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import Navbar from "../components/Navbar";
 import Pokemon from "../components/Pokemon";
-import SearchBar from "../components/SearchBar";
+import PokemonSelect from "../components/PokemonSelect";
 
 export default function Home() {
+  const [pokemon, setPokemon] = useState("bulbasaur");
+  const [selectedPokemonImage, setSelectedPokemonImage] = useState();
+
+  useEffect(() => {
+    fetchPokemon();
+
+    async function fetchPokemon() {
+      const API_PREIX = "https://pokeapi.co/api/v2/pokemon/";
+      const url = new URL(`${API_PREIX}${pokemon}`);
+      const result = await fetch(url);
+      const data = await result.json();
+      const image = data.sprites.other.dream_world.front_default;
+
+      setSelectedPokemonImage(image);
+    }
+  }, [pokemon]);
+
   return (
     <>
       <Head>
@@ -21,27 +39,17 @@ export default function Home() {
               <Hero />
 
               <div className="mx-5 mt-4">
-                <SearchBar />
+                <PokemonSelect handlePokemonChange={setPokemon} />
               </div>
             </main>
           </div>
           <Divider />
           <div className="mt-8 max-w-full flex-1">
-            <Pokemon />
+            <Pokemon image={selectedPokemonImage} />
           </div>
         </div>
       </div>
-
-      {/* <footer className="">
-        Repo brought to you by bleafman &nbsp;
-        <a
-          href="https://github.com/bleafman"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FontAwesomeIcon icon={faGithub} />
-        </a>
-      </footer> */}
+      <Footer />
     </>
   );
 }
@@ -68,5 +76,34 @@ function Divider() {
     >
       <polygon points="50,0 100,0 50,100 0,100" />
     </svg>
+  );
+}
+
+function Footer() {
+  return (
+    <footer
+      style={{
+        fontVariant: "all-small-caps",
+      }}
+      className="text-xs text-gray-600 font-semibold tracking-tight m-3"
+    >
+      <a
+        className="text-rose-400"
+        href="https://github.com/bleafman/pokedex-react-custom-hooks"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Repo
+      </a>{" "}
+      brought to you by{" "}
+      <a
+        className="text-rose-400"
+        href="https://github.com/bleafman"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        bleafman
+      </a>
+    </footer>
   );
 }

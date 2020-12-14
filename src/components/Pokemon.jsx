@@ -1,11 +1,17 @@
-export default function Pokemon() {
+import T from "prop-types";
+
+export default function Pokemon({ image }) {
   return (
     <div>
       <img
-        className="object-contain mx-auto w-full h-72 lg:w-full"
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
-        alt=""
+        className="object-contain mx-auto h-72"
+        src={image}
+        alt="pokemon image"
       />
     </div>
   );
 }
+
+Pokemon.propTypes = {
+  image: T.string.isRequired,
+};
