@@ -50,7 +50,6 @@ export default function Home() {
 
             <main className="mx-auto max-w-7xl sm:mt-12 sm:px-6 mt-6 mb-12 sm:mb-16 md:mt-16 lg:px-8">
               <Hero />
-
               <div className="mx-5 mt-4">
                 <PokemonSelect
                   handlePokemonChange={(pokemon) =>
@@ -63,7 +62,9 @@ export default function Home() {
           <Divider />
           <div className="mt-8 max-w-full flex-1">
             {isError ? (
-              "Ooops, there was an error..."
+              <div className="text-rose-500 mt-32 text-center">
+                Oh no! There was an error...
+              </div>
             ) : (
               <Pokemon image={selectedPokemonImage} isLoading={isLoading} />
             )}
