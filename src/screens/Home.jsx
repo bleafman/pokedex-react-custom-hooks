@@ -1,43 +1,14 @@
-import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import Navbar from "../components/Navbar";
 import Pokemon from "../components/Pokemon";
 import PokemonSelect from "../components/PokemonSelect";
-
-const usePokemonAPI = () => {
-  const [pokemon, setPokemon] = useState("bulbasaur");
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    fetchPokemon();
-
-    async function fetchPokemon() {
-      const API_PREIX = "https://pokeapi.co/api/v2/pokemon/";
-      const url = new URL(`${API_PREIX}${pokemon}`);
-
-      setIsError(false);
-      setIsLoading(true);
-
-      try {
-        const result = await fetch(url);
-        const data = await result.json();
-        setData(data);
-      } catch (e) {
-        setIsError(true);
-      }
-
-      setIsLoading(false);
-    }
-  }, [pokemon]);
-
-  return [{ data, isLoading, isError }, setPokemon];
-};
+import { usePokemonAPI } from "./usePokemonAPI";
 
 export default function Home() {
-  const [{ data, isLoading, isError }, setPokemon] = usePokemonAPI();
+  const [{ image, isLoading, isError }, setPokemon] = usePokemonAPI(
+    "bulbasaur"
+  );
 
   return (
     <>
@@ -69,10 +40,7 @@ export default function Home() {
                 Oh no! There was an error...
               </div>
             ) : (
-              <Pokemon
-                image={data?.sprites?.other?.dream_world?.front_default}
-                isLoading={isLoading}
-              />
+              <Pokemon image={image} isLoading={isLoading} />
             )}
           </div>
         </div>
