@@ -13,6 +13,10 @@ export default function Pokemon({ image, isLoading }) {
 }
 
 Pokemon.propTypes = {
-  image: T.string.isRequired,
+  image: T.string,
   isLoading: T.bool.isRequired,
+};
+
+Pokemon.defaultProps = {
+  image: "./pokeball.svg",
 };
