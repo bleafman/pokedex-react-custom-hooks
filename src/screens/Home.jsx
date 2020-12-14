@@ -5,10 +5,9 @@ import Navbar from "../components/Navbar";
 import Pokemon from "../components/Pokemon";
 import PokemonSelect from "../components/PokemonSelect";
 
-export default function Home() {
+const usePokemonAPI = () => {
   const [pokemon, setPokemon] = useState("bulbasaur");
-  const [selectedPokemonImage, setSelectedPokemonImage] = useState();
-
+  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -25,9 +24,7 @@ export default function Home() {
       try {
         const result = await fetch(url);
         const data = await result.json();
-        const image = data.sprites.other.dream_world.front_default;
-
-        setSelectedPokemonImage(image);
+        setData(data);
       } catch (e) {
         setIsError(true);
       }
@@ -35,6 +32,12 @@ export default function Home() {
       setIsLoading(false);
     }
   }, [pokemon]);
+
+  return [{ data, isLoading, isError }, setPokemon];
+};
+
+export default function Home() {
+  const [{ data, isLoading, isError }, setPokemon] = usePokemonAPI();
 
   return (
     <>
@@ -66,7 +69,10 @@ export default function Home() {
                 Oh no! There was an error...
               </div>
             ) : (
-              <Pokemon image={selectedPokemonImage} isLoading={isLoading} />
+              <Pokemon
+                image={data?.sprites?.other?.dream_world?.front_default}
+                isLoading={isLoading}
+              />
             )}
           </div>
         </div>
