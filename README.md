@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokedex
+
+This is a demo repo for learning about [React Hooks](https://reactjs.org/docs/hooks-intro.html) and how to make custom hooks.
+
+Each branch of the code base is at a different point in the process of connecting the `<Home/>` page to [PokeAPI](https://pokeapi.co/).
+
+`main` branch is set to a starting point that assumes you're familiar with hooks (**hint:** the hook doesn't work quite right).
+
+`00-no-data` branch has just the page without anything connected, while `main` currently
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), but assumes you haven't worked with Next.js before.
+
+If you started a `create-react-app` project, copied the `src` and `public` directories over and installed the dependencies, the app would work a with few very minor modifications.
 
 ## Getting Started
 
@@ -12,7 +24,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/screens/Home.jsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
